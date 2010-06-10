@@ -1,3 +1,5 @@
+infinite_loop_workaround("filtertypes");
+
 // A single filter rule.
 var Filter = function() {
   this._adType = Filter.adTypes.GENERAL; // can be overridden by subclasses

@@ -1,3 +1,15 @@
+function infinite_loop_workaround(where) {
+  // Chrome 5 doesn't have this problem, but Chrome 4 gets stupid on XHTML
+  // pages when we load jQuery.  So we have to run this function in EVERY
+  // script we load, to avoid running if necessary.
+  if (typeof abort_abort_abort != "undefined") {
+    console.log("Dying in " + where);
+    die_to_avoid_infinite_loop_in_chrome_4;
+  }
+}
+
+infinite_loop_workaround("functions");
+
 // Data that various parts of the program may find useful to cache.
 // You can never rely on something being in here if the code that placed
 // it in here was run asynchronously, because of race conditions.
@@ -62,10 +74,8 @@ time_log = function() { };
 
 // TODO: when they whitelist a page, make sure the top level domain is
 // whitelisted, even if they happened to be clicking inside an iframe.
-function page_is_whitelisted(whitelist, the_domain, notonhttps) {
+function page_is_whitelisted(whitelist, the_domain) {
   if (the_domain == "health.google.com") return true;
-  if (the_domain == "acid3.acidtests.org") return true;
-  if (location.protocol == 'https:' && notonhttps) return true;
   for (var i = 0; i < whitelist.length; i++) {
     if (the_domain.indexOf(whitelist[i]) != -1)
       return true;
@@ -78,11 +88,3 @@ function page_is_whitelisted(whitelist, the_domain, notonhttps) {
 //issue 267 to be fixed first. Until this time any user adding
 //a filter containing multiple '##' will get a broken filter
 var global_filter_validation_regex = /(\#\#|^)(((\*|[A-Za-z0-9]+)|(\*|[A-Za-z0-9]+)?((\[[a-zA-Z0-9\-]+((\~|\^|\$|\*|\|)?\=\".+\")?\])+|\:\:?[a-zA-Z\-]+(\(.+\))?|\.[^\#]+|\#[a-zA-Z0-9_\-\:\.]+)+)\ *((\>|\+|\~)\ *)?)+$/;
-
-//When you click the label after a checkbox, also change
-//the status of the checkbox itself.
-function checkboxlabel_clicked() {
-  $(this).prev('input').
-    click(). //trigger the UI
-    change(); // activate the handler as if a user had clicked it
-}

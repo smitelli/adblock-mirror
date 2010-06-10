@@ -1,3 +1,6 @@
+infinite_loop_workaround("myfilters");
+
+
 // Requires jquery and 'utils.get_optional_features' method from background
 
 // MyFilters class manages subscriptions and the FilterSet.
@@ -236,17 +239,6 @@ MyFilters.prototype.get_subscriptions_minus_text = function() {
   }
   return result;
 }
-// Return a map from subscription id to
-// {
-//   text:string - all filters from this subscription
-// }
-MyFilters.prototype.get_subscriptions_text = function() {
-  var result = {};
-  for (var id in this._subscriptions) {
-    result[id] = {text: this._subscriptions[id].text}
-  }
-  return result;
-}
 
 // Return a new subscriptions object containing all available subscriptions,
 // with EasyList and AdBlock custom filters subscribed from disk.
@@ -322,10 +314,6 @@ MyFilters.__make_subscription_options = function() {
       url: "http://chromeadblock.com/filters/adblock_custom.txt",
       name: "Chrome AdBlock custom filters (recommended)",
     },
-    "__AdBlock_Advanced_Filters__": {
-      url: "",
-      name: "AdBlock advanced filters",
-    },
     "easylist": {
       url: "http://adblockplus.mozdev.org/easylist/easylist.txt",
       name: "EasyList (recommended)",
@@ -333,10 +321,6 @@ MyFilters.__make_subscription_options = function() {
     "easylist_plus_bulgarian": {
       url: "http://stanev.org/abp/adblock_bg.txt",
       name: " - additional Bulgarian filters",
-    },
-    "dutch": { //id must not change!
-      url: "http://sites.google.com/site/dutchadblockfilters/AdBlock_Dutch_hide.txt",
-      name: " - additional Dutch filters",
     },
     "easylist_plus_finnish": {
       url: "http://www.wiltteri.net/wiltteri.txt",
@@ -350,10 +334,6 @@ MyFilters.__make_subscription_options = function() {
       url: "http://adblockplus.mozdev.org/easylist/easylistgermany.txt",
       name: " - additional German filters",
     },
-    "easylist_plus_norwegian": {
-      url: "http://home.online.no/~mlangsho/adblock.txt",
-      name: " - additional Norwegian filters",
-    },
     "easylist_plus_polish": {
       url: "http://adblocklist.org/adblock-pxf-polish.txt",
       name: " - additional Polish filters",
@@ -361,6 +341,10 @@ MyFilters.__make_subscription_options = function() {
     "easylist_plus_romanian": {
       url: "http://www.picpoc.ro/menetzrolist.txt",
       name: " - additional Romanian filters",
+    },
+    "easylist_plus_spanish": {
+      url: "http://sites.google.com/site/nauscopio/Home/AdBlock-Nauscopio-maty.txt",
+      name: " - additional Spanish filters",
     },
     "easylist_plus_vietnamese": {
       url: "http://adblockplus-vietnam.googlecode.com/svn/trunk/abpvn.txt",
@@ -377,6 +361,10 @@ MyFilters.__make_subscription_options = function() {
     "danish": {
       url: "http://adblock.schack.dk/block.txt",
       name: "Danish filters",
+    },
+    "dutch": {
+      url: "http://dutchmega.nl/dutchblock/list.txt",
+      name: "Dutch filters",
     },
     "german": {
       url: "http://chewey.de/mozilla/data/adblock.txt",
@@ -405,10 +393,6 @@ MyFilters.__make_subscription_options = function() {
     "polish": {
       url: "http://www.niecko.pl/adblock/adblock.txt",
       name: "Polish filters",
-    },
-    "easylist_plus_spanish": { //id must not change!
-      url: "http://abp.mozilla-hispano.org/nauscopio/filtros.txt",
-      name: "Spanish filters",
     },
     "russian": {
       url: "http://ruadlist.googlecode.com/svn/trunk/adblock.txt",
